@@ -1,25 +1,12 @@
-import { useEffect, useState } from 'react'
+import "./App.css";
 
-import './App.css'
-import { Octokit } from "octokit";
-
-const octokit = new Octokit({ 
-  auth: 'YOUR-TOKEN'
-});
+import { useUserDataQuery, useUsersListQuery } from "./services/users";
 
 function App() {
-  const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const res = await octokit.request("GET /repos/{owner}/{repo}/issues", {
-        owner: "octocat",
-        repo: "Spoon-Knife",
-      });
-      console.log(res);
-    }
-  }, [])
- return <></>
+  const { data } = useUserDataQuery("ViktoriiaHV");
+
+  return <div>{JSON.stringify(data)}</div>;
 }
 
-export default App
+export default App;
