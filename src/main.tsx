@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import "./index.css";
 
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
-import { createBrowserRouter, RouterProvider, Search } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Search from "./pages/Search.tsx";
+
+import './main.css'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,10 @@ const router = createBrowserRouter([
     ),
     errorElement: <div>Oops, not found</div>,
     children: [
+      {
+        path: "/",
+        element: <Search />,
+      },
       {
         path: "/:userId",
         element: <div>User</div>,

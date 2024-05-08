@@ -1,29 +1,32 @@
-import React from "react";
-import {
-  AppBar,
-  Button,
-  CssBaseline,
-  Paper,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 
-import { useUserDataQuery, useUsersListQuery } from "../services/users";
+import { useUsersListQuery } from "../services/users";
 
 import styles from "./Search.module.css";
 import SearchInput from "../components/Search";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import UsersList from "../components/UsersList";
+
 function Search() {
-  const { data } = useUserDataQuery("ViktoriiaHV");
+  const query = useSelector((state: RootState) => state.search.query);
+
+  const { data, error, isLoading } = useUsersListQuery({ query, page: 1 });
+
+  console.log(data);
+
+  const fallback = (
+    <Typography component="h3" variant="h4" align="center">
+      Start typing to search for users
+    </Typography>
+  );
 
   return (
-      <main>
-        <Paper>
-        <SearchInput />
-          <Typography component="h1" variant="h4" align="center">Users</Typography>
-          <p>{JSON.stringify(data)}</p>
-        </Paper>
-      </main>
+    <>
+      <SearchInput />
+      {query.trim().length >= 3 ? <UsersList query={query} /> : fallback}
+    </>
   );
 }
 

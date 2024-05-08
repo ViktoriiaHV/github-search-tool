@@ -1,7 +1,18 @@
 import { Paper, IconButton, InputBase } from "@mui/material";
-import {Search as SearchIcon } from '@mui/icons-material'
+import { Search as SearchIcon } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+
+import { updateQuery } from "../store/searchSlice";
+import { RootState } from "../store/store";
 
 function SearchInput() {
+  const query = useSelector((state: RootState) => state.search.query);
+  const dispatch = useDispatch();
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    dispatch(updateQuery(e.target.value));
+  }
+
   return (
     <Paper
       component="form"
@@ -11,8 +22,10 @@ function SearchInput() {
         sx={{ ml: 1, flex: 1 }}
         placeholder="Search GitHub Users"
         inputProps={{ "aria-label": "search github users" }}
+        onChange={handleInputChange}
+        value={query}
       />
-      <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+      <IconButton sx={{ p: "10px" }}>
         <SearchIcon />
       </IconButton>
     </Paper>

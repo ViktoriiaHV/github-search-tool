@@ -11,6 +11,10 @@ const searchSlice = createSlice({
   reducers: {
     updateQuery(state, action) {
       const query = action.payload;
+      state.query = query;
+    },
+    nextPage(state, action) {
+      const query = action.payload;
       if(query.trim().length < 3) {
         return;
       }

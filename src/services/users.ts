@@ -5,20 +5,28 @@ const octokit = new Octokit({
   auth: import.meta.env.PERSONAL_ACCESS_TOKEN,
 });
 
-type User = {
-  name: string;
+export type PreviewUser = {
   login: string;
+  avatar_url: string;
+  id: number;
+  html_url: string;
+};
+
+type Response = {
+  total_count: number;
+  items: PreviewUser[];
+};
+
+export type User = PreviewUser & {
+  name: string;
   followers: number;
   following: number;
-}
+};
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/" }),
   endpoints: (builder) => ({
-    usersList: builder.query<
-      { login: string; id: number }[],
-      { query: string; page: number }
-    >({
+    usersList: builder.query<PreviewUser[], { query: string; page: number }>({
       queryFn: async ({ query, page }) => {
         try {
           const res = await octokit.request("GET /search/users", {
@@ -26,8 +34,10 @@ export const api = createApi({
             per_page: 10,
             page: page,
           });
+          console.log({ res });
           return {
             data: res.data.items,
+            count: res.data.total_count,
           };
         } catch (error) {
           const apiError = error as { message: string; status: number }; // todo improve TS
