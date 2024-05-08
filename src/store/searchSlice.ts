@@ -12,13 +12,10 @@ const searchSlice = createSlice({
     updateQuery(state, action) {
       const query = action.payload;
       state.query = query;
+      state.page = 1;
     },
-    nextPage(state, action) {
-      const query = action.payload;
-      if(query.trim().length < 3) {
-        return;
-      }
-      state.query = query;
+    nextPage(state) {
+      state.page++;
     }
   }
 })

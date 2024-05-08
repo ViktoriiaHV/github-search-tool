@@ -88,11 +88,11 @@ function User() {
                 </Typography>
               </Paper>
             </Box>
-            <Paper sx={{ padding: 2, marginBottom: 2 }}>
+            {data.company && <Paper sx={{ padding: 2, marginBottom: 2 }}>
               <Typography variant="h6" component="h3" sx={{ marginBottom: 2 }}>
                 Company: {data.company}
               </Typography>
-            </Paper>
+            </Paper>}
             {data.email && (
               <Paper sx={{ padding: 2, marginBottom: 2 }}>
                 <Typography

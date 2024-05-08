@@ -12,11 +12,6 @@ export type PreviewUser = {
   html_url: string;
 };
 
-type Response = {
-  total_count: number;
-  items: PreviewUser[];
-};
-
 export type User = PreviewUser & {
   name: string;
   followers: number;
