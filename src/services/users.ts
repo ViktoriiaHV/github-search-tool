@@ -21,6 +21,9 @@ export type User = PreviewUser & {
   name: string;
   followers: number;
   following: number;
+  company: string;
+  blog: string;
+  email: string | null;
 };
 
 export const api = createApi({
