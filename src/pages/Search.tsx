@@ -1,32 +1,36 @@
-import { Typography } from "@mui/material";
-
-import { useUsersListQuery } from "../services/users";
-
-import styles from "./Search.module.css";
-import SearchInput from "../components/Search";
-
 import { useSelector } from "react-redux";
+import { Box, Typography } from "@mui/material";
+
 import { RootState } from "../store/store";
+
+import SearchInput from "../components/Search";
 import UsersList from "../components/UsersList";
 
 function Search() {
   const query = useSelector((state: RootState) => state.search.query);
 
-  const { data, error, isLoading } = useUsersListQuery({ query, page: 1 });
-
-  console.log(data);
-
-  const fallback = (
-    <Typography component="h3" variant="h4" align="center">
+  const initialScreen = (
+    <Typography component="h3" variant="h5" align="center">
       Start typing to search for users
     </Typography>
   );
 
   return (
-    <>
-      <SearchInput />
-      {query.trim().length >= 3 ? <UsersList query={query} /> : fallback}
-    </>
+    <Box
+      width="100%"
+      height="100%"
+      display="flex"
+      flexDirection="column"
+      flexWrap="nowrap"
+      alignContent="center"
+    >
+      <Box flex={0}>
+        <SearchInput />
+      </Box>
+      <Box display="flex" alignItems="center" gap={4} p={5} flex={1} overflow='scroll'>
+        {query.trim().length >= 3 ? <UsersList query={query} /> : initialScreen}
+      </Box>
+    </Box>
   );
 }
 

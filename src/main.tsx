@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Search from "./pages/Search.tsx";
 
 import './main.css'
+import User from "./pages/User.tsx";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/:userId",
-        element: <div>User</div>,
+        element: <User />,
       },
     ],
   },
