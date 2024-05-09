@@ -12,7 +12,7 @@ import {
 
 function App() {
   return (
-    <Container sx={{ padding: "8rem" }}>
+    <Container sx={{ padding: "8rem", maxHeight: "100vh" }}>
       <CssBaseline />
       <AppBar position="fixed" color="default">
         <Toolbar>

@@ -20,5 +20,5 @@ const searchSlice = createSlice({
   }
 })
 
-export const { updateQuery } = searchSlice.actions
+export const { updateQuery, nextPage } = searchSlice.actions
 export default searchSlice.reducer

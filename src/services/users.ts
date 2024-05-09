@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Octokit } from "octokit";
 
+export const MAGIC_RESULTS_PER_PAGE = 20;
+
 const octokit = new Octokit({
   auth: import.meta.env.PERSONAL_ACCESS_TOKEN,
 });
@@ -10,6 +12,11 @@ export type PreviewUser = {
   avatar_url: string;
   id: number;
   html_url: string;
+};
+
+type Response = {
+  items: PreviewUser[];
+  count: number;
 };
 
 export type User = PreviewUser & {
@@ -24,18 +31,20 @@ export type User = PreviewUser & {
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/" }),
   endpoints: (builder) => ({
-    usersList: builder.query<PreviewUser[], { query: string; page: number }>({
+    usersList: builder.query<Response, { query: string; page: number }>({
       queryFn: async ({ query, page }) => {
         try {
           const res = await octokit.request("GET /search/users", {
             q: query,
-            per_page: 20,
+            per_page: MAGIC_RESULTS_PER_PAGE,
             page: page,
           });
           console.log({ res });
           return {
-            data: res.data.items,
-            count: res.data.total_count,
+            data: {
+              items: res.data.items,
+              count: res.data.total_count,
+            },
           };
         } catch (error) {
           const apiError = error as { message: string; status: number }; // todo improve TS
@@ -45,14 +54,19 @@ export const api = createApi({
           };
         }
       },
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName
+      serializeQueryArgs: ({ queryArgs }) => {
+        return queryArgs.query;
       },
       merge: (currentCache, newItems) => {
-        currentCache.push(...newItems)
+        console.log({ currentCache });
+        console.log({ newItems });
+        currentCache.items.push(...newItems.items);
       },
       forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg
+        return (
+          currentArg?.query !== previousArg?.query ||
+          currentArg?.page !== previousArg?.page
+        );
       },
     }),
     userData: builder.query<User, string>({
