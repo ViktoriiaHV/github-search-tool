@@ -16,7 +16,7 @@ function User() {
   const { pathname } = location;
   const username = pathname.replace("/", "");
   const { data, isLoading, error } = useUserDataQuery(username);
-  console.log({ data });
+  
   if (!data) {
     return;
   }
@@ -32,7 +32,7 @@ function User() {
     );
   }
   return (
-    <Container>
+    <Container sx={{maxHeight:'100%', overflow:'auto'}}>
       <Paper
         sx={{
           backgroundColor: "#f5f5f5",

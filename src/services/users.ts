@@ -29,7 +29,7 @@ export const api = createApi({
         try {
           const res = await octokit.request("GET /search/users", {
             q: query,
-            per_page: 10,
+            per_page: 20,
             page: page,
           });
           console.log({ res });
@@ -44,6 +44,15 @@ export const api = createApi({
             data: api.message,
           };
         }
+      },
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
+      },
+      merge: (currentCache, newItems) => {
+        currentCache.push(...newItems)
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg
       },
     }),
     userData: builder.query<User, string>({

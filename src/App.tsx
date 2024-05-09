@@ -1,12 +1,18 @@
 import { Outlet } from "react-router-dom";
-import styles from "./App.module.css";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
-import { CssBaseline, AppBar, Toolbar, Typography, Paper } from "@mui/material";
+import {
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  Typography,
+  Paper,
+  Container,
+} from "@mui/material";
 
 function App() {
   return (
-    <div className={styles.app}>
+    <Container sx={{ padding: "8rem" }}>
       <CssBaseline />
       <AppBar position="fixed" color="default">
         <Toolbar>
@@ -16,10 +22,14 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Paper elevation={3} component="main" className={styles.main}>
+      <Paper
+        elevation={3}
+        component="main"
+        sx={{ height: "70vh", padding: "3rem" }}
+      >
         <Outlet />
       </Paper>
-    </div>
+    </Container>
   );
 }
 

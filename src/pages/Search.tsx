@@ -20,14 +20,18 @@ function Search() {
       width="100%"
       height="100%"
       display="flex"
-      flexDirection="column"
-      flexWrap="nowrap"
-      alignContent="center"
     >
       <Box flex={0}>
         <SearchInput />
       </Box>
-      <Box display="flex" alignItems="center" gap={4} p={5} flex={1} overflow='scroll'>
+      <Box
+        display="flex"
+        alignItems="center"
+        gap={4}
+        p='0 2rem'
+        flex={1}
+        overflow="scroll"
+      >
         {query.trim().length >= 3 ? <UsersList query={query} /> : initialScreen}
       </Box>
     </Box>
