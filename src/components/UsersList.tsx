@@ -18,8 +18,10 @@ import {
 import { Link } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { nextPage } from "../store/searchSlice";
+import { useEffect, useRef } from "react";
 
 function UsersList({ query }: { query: string }) {
+  const listRef = useRef<HTMLUListElement>(null);
   const page = useSelector((state: RootState) => state.search.page);
   const dispatch = useDispatch();
 
@@ -29,6 +31,14 @@ function UsersList({ query }: { query: string }) {
   const handleNextPage = () => {
     dispatch(nextPage());
   };
+
+  const prevQueryRef = useRef(query);
+  useEffect(() => {
+    if (query !== prevQueryRef.current) {
+      prevQueryRef.current = query;
+      listRef.current?.scrollTo(0, 0);
+    }
+  }, [query]);
 
   if (isLoading || !data?.items) {
     return <LinearProgress sx={{ width: "100%" }} />;
@@ -44,6 +54,7 @@ function UsersList({ query }: { query: string }) {
 
   return (
     <List
+      ref={listRef}
       id="scrollableDiv"
       sx={{ height: "100%", width: "100%", overflow: "auto" }}
     >
