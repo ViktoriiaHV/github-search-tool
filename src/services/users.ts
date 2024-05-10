@@ -28,6 +28,8 @@ export type User = PreviewUser & {
   email: string | null;
 };
 
+ // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ // @ts-ignore
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/" }),
   endpoints: (builder) => ({
