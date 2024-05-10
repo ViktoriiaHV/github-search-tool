@@ -25,7 +25,7 @@ function App() {
       <Paper
         elevation={3}
         component="main"
-        sx={{ height: "70vh", padding: "3rem" }}
+        sx={{ height: "70vh", padding: "3rem", overflow: 'hidden', backgroundColor: '#fff' }}
       >
         <Outlet />
       </Paper>

@@ -26,7 +26,6 @@ function UsersList({ query }: { query: string }) {
   const dispatch = useDispatch();
 
   const { data, error, isLoading } = useUsersListQuery({ query, page });
-  console.log(page);
 
   const handleNextPage = () => {
     dispatch(nextPage());
@@ -64,7 +63,7 @@ function UsersList({ query }: { query: string }) {
         hasMore={page * MAGIC_RESULTS_PER_PAGE < data?.count}
         loader={<LinearProgress />}
         scrollableTarget="scrollableDiv"
-        endMessage="You've seen all results ;)"
+        endMessage={data.items.length > 0 ? "You've seen all results ;)" : 'No results for your search'}
       >
         {data.items.map((el: PreviewUser) => (
           <Link to={el.login} key={el.login}>

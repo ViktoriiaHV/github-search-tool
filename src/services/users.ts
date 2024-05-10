@@ -39,7 +39,7 @@ export const api = createApi({
             per_page: MAGIC_RESULTS_PER_PAGE,
             page: page,
           });
-          console.log({ res });
+          
           return {
             data: {
               items: res.data.items,
