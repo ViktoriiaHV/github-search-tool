@@ -24,7 +24,7 @@ function Search() {
   return (
     <Box width="100%" height="100%" display="flex">
       <Box flex={0}>
-        <SearchInput updateSearchQuery={handleInputChange} />
+        <SearchInput updateSearchQuery={handleInputChange} query={query} />
       </Box>
       <Box display="flex" alignItems="center" gap={4} p="0 2rem" flex={1}>
         {query.trim().length >= 3 ? <UsersList query={query} /> : initialScreen}

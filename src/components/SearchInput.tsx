@@ -4,12 +4,13 @@ import _debounce from "lodash/debounce";
 import { Paper, IconButton, InputBase } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
 
-function SearchInput({
-  updateSearchQuery,
-}: {
+interface SeacrhInputProps {
   updateSearchQuery: (newValue: string) => void;
-}) {
-  const [userInput, setUserInput] = useState<string>("");
+  query: string;
+}
+
+function SearchInput({ updateSearchQuery, query }: SeacrhInputProps) {
+  const [userInput, setUserInput] = useState<string>(query);
 
   const debouncedHandler = useCallback(_debounce(updateSearchQuery, 1000), []);
 

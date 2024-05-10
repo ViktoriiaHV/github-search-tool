@@ -64,6 +64,7 @@ function UsersList({ query }: { query: string }) {
         hasMore={page * MAGIC_RESULTS_PER_PAGE < data?.count}
         loader={<LinearProgress />}
         scrollableTarget="scrollableDiv"
+        endMessage="You've seen all results ;)"
       >
         {data.items.map((el: PreviewUser) => (
           <Link to={el.login} key={el.login}>
