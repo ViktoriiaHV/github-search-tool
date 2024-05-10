@@ -1,17 +1,21 @@
+import { useCallback, useEffect, useState } from "react";
+import _debounce from "lodash/debounce";
+
 import { Paper, IconButton, InputBase } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
 
-import { updateQuery } from "../store/searchSlice";
-import { RootState } from "../store/store";
+function SearchInput({
+  updateSearchQuery,
+}: {
+  updateSearchQuery: (newValue: string) => void;
+}) {
+  const [userInput, setUserInput] = useState<string>("");
 
-function SearchInput() {
-  const query = useSelector((state: RootState) => state.search.query);
-  const dispatch = useDispatch();
+  const debouncedHandler = useCallback(_debounce(updateSearchQuery, 1000), []);
 
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    dispatch(updateQuery(e.target.value));
-  }
+  useEffect(() => {
+    debouncedHandler(userInput);
+  }, [userInput, debouncedHandler]);
 
   return (
     <Paper
@@ -22,8 +26,8 @@ function SearchInput() {
         sx={{ ml: 1, flex: 1 }}
         placeholder="Search GitHub Users"
         inputProps={{ "aria-label": "search github users" }}
-        onChange={handleInputChange}
-        value={query}
+        onChange={(e) => setUserInput(e.target.value)}
+        value={userInput}
       />
       <IconButton sx={{ p: "10px" }}>
         <SearchIcon />

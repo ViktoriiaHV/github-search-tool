@@ -58,8 +58,6 @@ export const api = createApi({
         return queryArgs.query;
       },
       merge: (currentCache, newItems) => {
-        console.log({ currentCache });
-        console.log({ newItems });
         currentCache.items.push(...newItems.items);
       },
       forceRefetch({ currentArg, previousArg }) {
